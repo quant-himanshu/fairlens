@@ -106,7 +106,7 @@ function CounterfactualCard({ example, revealed }: { example: CounterfactualExam
       </div>
 
       {/* Two-person comparison */}
-      <div className="grid grid-cols-2 divide-x" style={{ divideColor: "#1f2937" }}>
+      <div className="grid grid-cols-2 divide-x" >
         {[
           { person: a, label: "Person A" },
           { person: b, label: "Person B" },
