@@ -16,7 +16,6 @@ async def list_demo_datasets():
         {"name": "lending", "description": "Loan approval dataset with racial bias", "rows": 1200},
         {"name": "healthcare", "description": "Treatment recommendation dataset with age bias", "rows": 800},
         {"name": "india-loan", "description": "Indian loan applications (RBI/NABARD patterns)", "rows": 2000},
-        {"name": "india-loan", "description": "Indian loan applications (RBI/NABARD patterns)", "rows": 2000},
     ]
 
 
@@ -30,6 +29,17 @@ async def download_demo_dataset(name: str):
     buf = io.StringIO()
     df.to_csv(buf, index=False)
     buf.seek(0)
+    
+    elif name == "india-loan":
+        df = pd.DataFrame({
+            'applicant_id': range(n),
+            'gender': np.random.choice(['Male', 'Female'], n, p=[0.6, 0.4]),
+            'location_type': np.random.choice(['Urban', 'Semi-Urban', 'Rural'], n),
+            'income_lakhs': np.random.normal(8, 3, n).clip(1, 50),
+            'approved': np.random.choice([0, 1], n),
+            'financially_eligible': np.random.choice([0, 1], n)
+        })
+    
     return StreamingResponse(
         io.BytesIO(buf.getvalue().encode()),
         media_type="text/csv",
@@ -186,6 +196,17 @@ async def download_india_loan_dataset():
     buf = io.StringIO()
     df.to_csv(buf, index=False)
     buf.seek(0)
+    
+    elif name == "india-loan":
+        df = pd.DataFrame({
+            'applicant_id': range(n),
+            'gender': np.random.choice(['Male', 'Female'], n, p=[0.6, 0.4]),
+            'location_type': np.random.choice(['Urban', 'Semi-Urban', 'Rural'], n),
+            'income_lakhs': np.random.normal(8, 3, n).clip(1, 50),
+            'approved': np.random.choice([0, 1], n),
+            'financially_eligible': np.random.choice([0, 1], n)
+        })
+    
     return StreamingResponse(
         io.BytesIO(buf.getvalue().encode()),
         media_type="text/csv",
