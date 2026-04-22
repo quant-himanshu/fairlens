@@ -6,7 +6,7 @@ from fastapi.responses import StreamingResponse
 
 router = APIRouter()
 
-DEMO_DATASETS = ["hiring", "lending", "healthcare"]
+DEMO_DATASETS = ["hiring", "lending", "healthcare", "india-loan"]
 
 
 @router.get("/")
@@ -15,6 +15,8 @@ async def list_demo_datasets():
         {"name": "hiring", "description": "Resume screening dataset with gender bias", "rows": 1000},
         {"name": "lending", "description": "Loan approval dataset with racial bias", "rows": 1200},
         {"name": "healthcare", "description": "Treatment recommendation dataset with age bias", "rows": 800},
+        {"name": "india-loan", "description": "Indian loan applications (RBI/NABARD patterns)", "rows": 2000},
+        {"name": "india-loan", "description": "Indian loan applications (RBI/NABARD patterns)", "rows": 2000},
     ]
 
 
@@ -63,7 +65,7 @@ async def get_demo_config(name: str):
 
 def _generate_demo_dataset(name: str) -> pd.DataFrame:
     rng = np.random.default_rng(42)
-    n = {"hiring": 1000, "lending": 1200, "healthcare": 800}[name]
+    n = {"hiring": 1000, "lending": 1200, "healthcare": 800, "india-loan": 2000}[name]
 
     if name == "hiring":
         gender = rng.choice(["male", "female"], size=n, p=[0.5, 0.5])
