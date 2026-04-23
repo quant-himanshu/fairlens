@@ -42,6 +42,8 @@ app.include_router(datasets_router, prefix="/api/datasets", tags=["datasets"])
 async def health():
     return {"status": "ok", "service": "fairlens-api"}
 
+
+
 from utils.explainer import explain_bias_with_gemini
 
 @app.get("/api/explain/")
