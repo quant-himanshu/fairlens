@@ -43,6 +43,8 @@ async def health():
     return {"status": "ok", "service": "fairlens-api"}
 
 from utils.explainer import explain_bias_with_gemini
-@app.get("/api/explain", include_in_schema=True)
+
+@app.get("/api/explain/")
+@app.get("/api/explain")
 async def explain_bias(metric: str, value: float):
     return {"explanation": explain_bias_with_gemini(metric, value)}
