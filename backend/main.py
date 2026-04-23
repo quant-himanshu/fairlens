@@ -4,7 +4,6 @@ from contextlib import asynccontextmanager
 import logging
 
 from api.audit import router as audit_router
-from api.explain import router as explain_router
 from api.datasets import router as datasets_router
 from api.pipeline import router as pipeline_router
 
@@ -35,7 +34,6 @@ app.add_middleware(
 )
 
 app.include_router(audit_router, prefix="/api/audit", tags=["audit"])
-app.include_router(explain_router, prefix="/api/explain", tags=["explain"])
 app.include_router(pipeline_router, prefix="/api/pipeline", tags=["pipeline"])
 app.include_router(datasets_router, prefix="/api/datasets", tags=["datasets"])
 
@@ -43,3 +41,8 @@ app.include_router(datasets_router, prefix="/api/datasets", tags=["datasets"])
 @app.get("/health")
 async def health():
     return {"status": "ok", "service": "fairlens-api"}
+
+from utils.explainer import explain_bias_with_gemini
+@app.get("/api/explain")
+async def explain_bias(metric: str, value: float):
+    return {"explanation": explain_bias_with_gemini(metric, value)}
